@@ -42,6 +42,14 @@
             font-family: 'Vazirmatn', 'Yekan', sans-serif;
             overflow-x: hidden;
         }
+
+        /* Dynamic Alignment Classes based on HTML DIR attribute */
+        html[dir="rtl"] .text-dir-aware { text-align: right; }
+        html[dir="ltr"] .text-dir-aware { text-align: left; }
+
+        html[dir="rtl"] .flex-dir-aware { flex-direction: row-reverse; }
+        html[dir="ltr"] .flex-dir-aware { flex-direction: row; }
+
         .glass-card {
             background: rgba(17, 24, 39, 0.8);
             backdrop-filter: blur(12px);
@@ -116,12 +124,12 @@
         </div>
 
         <!-- Mobile Dropdown Menu -->
-        <div id="mobile-menu" class="hidden md:hidden glass-card border-t border-blue-900/30 px-4 pt-2 pb-4 space-y-1 transition-all duration-300">
-            <button onclick="switchTab('home'); toggleMobileMenu();" class="block w-full text-right px-3 py-2 rounded-md text-base font-medium text-blue-400 bg-dark-700/50" data-i18n="home">خانه</button>
-            <button onclick="switchTab('games'); toggleMobileMenu();" class="block w-full text-right px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-dark-700/50" data-i18n="games">بازی‌ها</button>
-            <button onclick="switchTab('apps'); toggleMobileMenu();" class="block w-full text-right px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-dark-700/50" data-i18n="apps">برنامه‌ها</button>
-            <button onclick="switchTab('allFiles'); toggleMobileMenu();" class="block w-full text-right px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-dark-700/50" data-i18n="allFiles">همه فایل‌ها</button>
-            <button onclick="switchTab('about'); toggleMobileMenu();" class="block w-full text-right px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-dark-700/50" data-i18n="about">درباره</button>
+        <div id="mobile-menu" class="hidden md:hidden glass-card border-t border-blue-900/30 px-4 pt-2 pb-4 space-y-1 transition-all duration-300 text-dir-aware">
+            <button onclick="switchTab('home'); toggleMobileMenu();" class="block w-full px-3 py-2 rounded-md text-base font-medium text-blue-400 bg-dark-700/50 text-dir-aware" data-i18n="home">خانه</button>
+            <button onclick="switchTab('games'); toggleMobileMenu();" class="block w-full px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-dark-700/50 text-dir-aware" data-i18n="games">بازی‌ها</button>
+            <button onclick="switchTab('apps'); toggleMobileMenu();" class="block w-full px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-dark-700/50 text-dir-aware" data-i18n="apps">برنامه‌ها</button>
+            <button onclick="switchTab('allFiles'); toggleMobileMenu();" class="block w-full px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-dark-700/50 text-dir-aware" data-i18n="allFiles">همه فایل‌ها</button>
+            <button onclick="switchTab('about'); toggleMobileMenu();" class="block w-full px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-dark-700/50 text-dir-aware" data-i18n="about">درباره</button>
         </div>
     </header>
 
@@ -129,12 +137,12 @@
     <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
         <!-- Global Search Bar -->
-        <div id="search-container" class="mb-8 hidden">
+        <div id="search-container" class="mb-8">
             <div class="relative max-w-xl mx-auto">
-                <span class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none text-blue-500/70">
+                <span id="search-icon-wrapper" class="absolute inset-y-0 flex items-center px-4 pointer-events-none text-blue-500/70">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </span>
-                <input type="text" id="global-search" oninput="handleSearch()" placeholder="🔍 جستجو در بازی‌ها و برنامه‌ها..." class="w-full bg-dark-800/90 text-white placeholder-gray-400 pl-4 pr-11 py-3 rounded-xl border border-blue-900/40 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all shadow-inner">
+                <input type="text" id="global-search" oninput="handleSearch()" placeholder="🔍 جستجو در بازی‌ها و برنامه‌ها..." class="w-full bg-dark-800/90 text-white placeholder-gray-400 py-3 rounded-xl border border-blue-900/40 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all shadow-inner text-dir-aware">
             </div>
         </div>
 
@@ -172,21 +180,21 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="glass-card p-6 rounded-2xl glow-effect transition-all">
+                <div class="glass-card p-6 rounded-2xl glow-effect transition-all text-dir-aware">
                     <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center text-xl mb-4">
                         <i class="fa-solid fa-mobile-screen-button"></i>
                     </div>
                     <h3 class="text-lg font-bold text-white mb-2" data-i18n="feat1Title">موبایل (APK / ZIP)</h3>
                     <p class="text-gray-300 text-sm" data-i18n="feat1Desc">بازی‌ها و برنامه‌های اندرویدی و فشرده با سازگاری کامل.</p>
                 </div>
-                <div class="glass-card p-6 rounded-2xl glow-effect transition-all">
+                <div class="glass-card p-6 rounded-2xl glow-effect transition-all text-dir-aware">
                     <div class="w-12 h-12 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center text-xl mb-4">
                         <i class="fa-solid fa-desktop"></i>
                     </div>
                     <h3 class="text-lg font-bold text-white mb-2" data-i18n="feat2Title">کامپیوتر و وب</h3>
                     <p class="text-gray-300 text-sm" data-i18n="feat2Desc">بازی‌های دسکتاپ و تحت وب با اجرای سریع و نسخه‌های متنوع.</p>
                 </div>
-                <div class="glass-card p-6 rounded-2xl glow-effect transition-all">
+                <div class="glass-card p-6 rounded-2xl glow-effect transition-all text-dir-aware">
                     <div class="w-12 h-12 rounded-xl bg-blue-600/10 text-blue-300 flex items-center justify-center text-xl mb-4">
                         <i class="fa-solid fa-shield-halved"></i>
                     </div>
@@ -198,7 +206,7 @@
 
         <!-- ================= GAMES TAB ================= -->
         <section id="tab-games" class="tab-content hidden space-y-8">
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-blue-900/30 pb-6">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-blue-900/30 pb-6 text-dir-aware">
                 <div>
                     <h2 class="text-2xl sm:text-3xl font-extrabold text-white flex items-center gap-3">
                         <i class="fa-solid fa-gamepad text-blue-400"></i> <span data-i18n="gamesTitle">بازی‌ها</span>
@@ -217,7 +225,7 @@
 
         <!-- ================= APPS TAB ================= -->
         <section id="tab-apps" class="tab-content hidden space-y-8">
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-blue-900/30 pb-6">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-blue-900/30 pb-6 text-dir-aware">
                 <div>
                     <h2 class="text-2xl sm:text-3xl font-extrabold text-white flex items-center gap-3">
                         <i class="fa-solid fa-mobile-screen text-indigo-400"></i> <span data-i18n="appsTitle">برنامه‌ها</span>
@@ -236,7 +244,7 @@
 
         <!-- ================= ALL FILES TAB ================= -->
         <section id="tab-allFiles" class="tab-content hidden space-y-8">
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-blue-900/30 pb-6">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-blue-900/30 pb-6 text-dir-aware">
                 <div>
                     <h2 class="text-2xl sm:text-3xl font-extrabold text-white flex items-center gap-3">
                         <i class="fa-solid fa-folder-open text-blue-400"></i> <span data-i18n="allFilesTitle">همه فایل‌ها (آرشیو کامل)</span>
@@ -254,9 +262,9 @@
         </section>
 
         <!-- ================= ABOUT TAB ================= -->
-        <section id="tab-about" class="tab-content hidden space-y-8 max-w-3xl mx-auto">
+        <section id="tab-about" class="tab-content hidden space-y-8 max-w-3xl mx-auto text-dir-aware">
             <div class="glass-card p-8 sm:p-10 rounded-3xl border border-blue-900/30 space-y-6 shadow-xl">
-                <div class="flex items-center space-x-4 space-x-reverse">
+                <div class="flex items-center space-x-4 space-x-reverse" id="about-header-flex">
                     <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-2xl text-white shadow-lg">
                         <i class="fa-solid fa-info"></i>
                     </div>
@@ -280,7 +288,7 @@
 
     <!-- Footer -->
     <footer class="glass-nav mt-16 py-8 text-center text-sm text-gray-300 border-t border-blue-900/30">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-2">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-2 text-dir-aware">
             <p class="font-bold text-white tracking-wide">Mohaghegh's Apps</p>
             <p class="text-xs text-gray-300" data-i18n="heroSubtitle">بازی‌ها و برنامه‌های ساخته‌شده توسط امیر محمد محقق</p>
             <p class="text-xs text-gray-400 pt-2" data-i18n="copyright">© 2026 Mohaghegh's Apps. تمامی حقوق محفوظ است.</p>
@@ -334,11 +342,12 @@
                 finalVersion: "نسخه نهایی",
                 notDeclared: "اعلام نشده",
                 copyright: "© 2026 Mohaghegh's Apps. تمامی حقوق محفوظ است.",
-                gameBoxDesc: "مجموعه‌ای جذاب و سرگرم‌کننده از بازی‌های موبایلی.",
+                gameBoxDesc: "مجموعه‌ای جذاب و سرگرم‌کننده از بازی‌های دورهمی.",
                 superJumperDesc: "بازی پرشی هیجان‌انگیز کامپیوتری. نسخه 1.2 نسخه نهایی است و دیگر نسخه جدیدی منتشر نخواهد شد.",
-                defense30Desc: "یک بازی استراتژیک سریع و مهیج برای دفاع از پایگاه در کامپیوتر.",
+                defense30Desc: "تلاش برای زنده ماندن در 30 ثانیه!",
                 streetWarriorsDesc: "بازی اکشن و جذاب Street Warriors که هم روی کامپیوتر و هم روی اندروید قابل اجراست.",
                 quickToolsDesc: "جعبه‌ابزار سریع و کاربردی موبایل برای انجام کارهای روزمره.",
+                amirMusicDesc: "برنامه پخش موزیک امیر موزیک با قابلیت‌های کاربردی برای کامپیوتر و وب.",
                 mobilePc: "📱💻 موبایل و کامپیوتر",
                 notFoundTitle: "موردی یافت نشد.",
                 notFoundDesc: "پروژه‌ای با این مشخصات وجود ندارد."
@@ -387,11 +396,12 @@
                 finalVersion: "Final Version",
                 notDeclared: "N/A",
                 copyright: "© 2026 Mohaghegh's Apps. All rights reserved.",
-                gameBoxDesc: "An engaging and entertaining collection of mobile games.",
+                gameBoxDesc: "An engaging and entertaining collection of party games.",
                 superJumperDesc: "An exciting PC jumper game. Version 1.2 is the final version and no new versions will be released.",
-                defense30Desc: "A fast and thrilling strategic base defense game for PC.",
+                defense30Desc: "Struggling to survive in 30 seconds!",
                 streetWarriorsDesc: "An action-packed Street Warriors game playable on both PC and Android.",
                 quickToolsDesc: "Fast and useful mobile toolbox for everyday tasks.",
+                amirMusicDesc: "Amir Music player application with useful features for PC and web.",
                 mobilePc: "📱💻 Mobile & PC",
                 notFoundTitle: "No results found.",
                 notFoundDesc: "No project matches your search criteria."
@@ -399,6 +409,24 @@
         };
 
         let currentLang = 'fa';
+
+        function updateSearchInputPadding() {
+            const wrapper = document.getElementById('search-icon-wrapper');
+            const input = document.getElementById('global-search');
+            if (!wrapper || !input) return;
+
+            if (currentLang === 'en') {
+                wrapper.style.left = '0';
+                wrapper.style.right = 'auto';
+                input.style.paddingLeft = '3rem';
+                input.style.paddingRight = '1rem';
+            } else {
+                wrapper.style.right = '0';
+                wrapper.style.left = 'auto';
+                input.style.paddingRight = '3rem';
+                input.style.paddingLeft = '1rem';
+            }
+        }
 
         function toggleLanguage() {
             currentLang = currentLang === 'fa' ? 'en' : 'fa';
@@ -415,7 +443,9 @@
                 langLabel.innerText = 'English';
             }
 
+            updateSearchInputPadding();
             updateTexts();
+            
             const activeTab = document.querySelector('.tab-content:not(.hidden)');
             if (activeTab) {
                 const tabId = activeTab.id.replace('tab-', '');
@@ -438,6 +468,18 @@
             if (searchInput) {
                 searchInput.placeholder = t.searchPlaceholder;
             }
+
+            // Fix about section icon/text flex direction dynamically
+            const aboutHeaderFlex = document.getElementById('about-header-flex');
+            if (aboutHeaderFlex) {
+                if (currentLang === 'en') {
+                    aboutHeaderFlex.style.flexDirection = 'row';
+                    aboutHeaderFlex.style.gap = '1rem';
+                } else {
+                    aboutHeaderFlex.style.flexDirection = 'row-reverse';
+                    aboutHeaderFlex.style.gap = '1rem';
+                }
+            }
         }
 
         const downloads = {
@@ -449,7 +491,11 @@
             },
             defense30: "https://uploadkon.ir/uploads/e6ed16_26بازی-دفاعی-30-ثانیه.rar",
             streetWarriors: "https://uploadkon.ir/uploads/7c1616_26Street-Warriors-Ultimate-Edition.zip",
-            quickTools: "https://uploadkon.ir/uploads/7f6617_26QuickTools.zip"
+            quickTools: "https://uploadkon.ir/uploads/7f6617_26QuickTools.zip",
+            amirMusic: {
+                exe: "https://uploadkon.ir/uploads/eeb817_26AmirMusic-win32-x64.zip",
+                html: "https://uploadkon.ir/uploads/932f17_26Amir-Music-v1-1-0.rar"
+            }
         };
 
         let siteData = {
@@ -519,45 +565,43 @@
                     descKey: 'quickToolsDesc',
                     image: 'https://uploadkon.ir/uploads/b0c617_261789626881151.png',
                     downloadKey: 'quickTools'
+                },
+                {
+                    id: 'amirMusic',
+                    name: 'Amir Music',
+                    platform: 'pc',
+                    category: 'apps',
+                    latestVersion: '1.1.0',
+                    statusKey: 'published',
+                    format: 'EXE / HTML',
+                    descKey: 'amirMusicDesc',
+                    image: 'https://uploadkon.ir/uploads/967017_26ChatGPT-Image-Sep-17-2026-03-57-54-PM.png',
+                    versions: [
+                        { ver: 'EXE', linkKey: 'exe' },
+                        { ver: 'HTML', linkKey: 'html' }
+                    ]
                 }
             ]
         };
 
-        let currentFilters = {
-            games: 'all',
-            apps: 'all',
-            allFiles: 'all'
-        };
-
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 btn.classList.remove('text-blue-400', 'bg-dark-700/60');
-                btn.classList.add('text-gray-300');
+                btn.classList.add('text-gray-300', 'hover:text-white', 'hover:bg-dark-700/30');
             });
 
-            const targetTab = document.getElementById(`tab-${tabId}`);
-            if (targetTab) {
-                targetTab.classList.remove('hidden');
+            const activeNav = document.getElementById(`nav-${tabId}`);
+            if (activeNav) {
+                activeNav.classList.remove('text-gray-300', 'hover:text-white', 'hover:bg-dark-700/30');
+                activeNav.classList.add('text-blue-400', 'bg-dark-700/60');
             }
 
-            const activeBtn = document.getElementById(`nav-${tabId}`);
-            if (activeBtn) {
-                activeBtn.classList.add('text-blue-400', 'bg-dark-700/60');
-                activeBtn.classList.remove('text-gray-300');
-            }
-
-            const searchContainer = document.getElementById('search-container');
-            if (tabId === 'games' || tabId === 'apps' || tabId === 'allFiles') {
-                searchContainer.classList.remove('hidden');
-                if (tabId === 'allFiles') {
-                    renderAllFiles();
-                } else {
-                    renderProjects(tabId);
-                }
-            } else {
-                searchContainer.classList.add('hidden');
-            }
+            if (tabId === 'games') renderProjects('games');
+            else if (tabId === 'apps') renderProjects('apps');
+            else if (tabId === 'allFiles') renderAllFiles();
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -575,211 +619,181 @@
             }
         }
 
-        function filterProjects(category, filterType) {
-            currentFilters[category] = filterType;
-            
-            const buttons = document.querySelectorAll(`.filter-btn-${category}`);
-            buttons.forEach(btn => {
+        function filterProjects(type, filter) {
+            document.querySelectorAll(`.filter-btn-${type}`).forEach(btn => {
                 btn.classList.remove('bg-blue-600', 'text-white');
-                btn.classList.add('text-gray-300');
+                btn.classList.add('text-gray-300', 'hover:text-dark-700');
             });
-            
-            const activeBtn = document.getElementById(`filter-${category}-${filterType}`);
-            if (activeBtn) {
-                activeBtn.classList.add('bg-blue-600', 'text-white');
-                activeBtn.classList.remove('text-gray-300');
-            }
+            document.getElementById(`filter-${type}-${filter}`).classList.remove('text-gray-300');
+            document.getElementById(`filter-${type}-${filter}`).classList.add('bg-blue-600', 'text-white');
 
-            renderProjects(category);
+            renderProjects(type, filter);
         }
 
-        function filterAllFiles(filterType) {
-            currentFilters.allFiles = filterType;
-
-            const buttons = document.querySelectorAll('.filter-btn-allFiles');
-            buttons.forEach(btn => {
+        function filterAllFiles(filter) {
+            document.querySelectorAll('.filter-btn-allFiles').forEach(btn => {
                 btn.classList.remove('bg-blue-600', 'text-white');
-                btn.classList.add('text-gray-300');
+                btn.classList.add('text-gray-300', 'hover:text-dark-700');
             });
+            document.getElementById(`filter-allFiles-${filter}`).classList.remove('text-gray-300');
+            document.getElementById(`filter-allFiles-${filter}`).classList.add('bg-blue-600', 'text-white');
 
-            const activeBtn = document.getElementById(`filter-allFiles-${filterType}`);
-            if (activeBtn) {
-                activeBtn.classList.add('bg-blue-600', 'text-white');
-                activeBtn.classList.remove('text-gray-300');
-            }
-
-            renderAllFiles();
+            renderAllFiles(filter);
         }
 
-        function renderProjects(category, searchQuery = '') {
-            const container = document.getElementById(`${category}-grid`);
-            if (!container) return;
-
-            let items = siteData[category];
-            const filter = currentFilters[category];
-
-            if (filter !== 'all') {
-                items = items.filter(item => item.platform === filter || item.platform === 'all');
-            }
-
-            if (searchQuery.trim() !== '') {
-                const q = searchQuery.toLowerCase();
-                items = items.filter(item => item.name.toLowerCase().includes(q));
-            }
-
+        function createCardHTML(item) {
             const t = translations[currentLang];
+            let platformBadge = '';
+            if (item.platform === 'mobile') platformBadge = `<span class="px-2.5 py-1 rounded-md text-xs font-medium bg-blue-500/10 text-blue-400 border border-blue-500/20">${t.mobile}</span>`;
+            else if (item.platform === 'pc') platformBadge = `<span class="px-2.5 py-1 rounded-md text-xs font-medium bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">${t.pc}</span>`;
+            else platformBadge = `<span class="px-2.5 py-1 rounded-md text-xs font-medium bg-purple-500/10 text-purple-400 border border-purple-500/20">${t.mobilePc}</span>`;
 
-            if (items.length === 0) {
-                container.innerHTML = `
-                    <div class="col-span-full py-16 text-center space-y-4 glass-card rounded-3xl border border-blue-900/30">
-                        <div class="text-5xl text-gray-500">📂</div>
-                        <h3 class="text-xl font-bold text-white">${t.notFoundTitle}</h3>
-                        <p class="text-gray-300 text-sm">${t.notFoundDesc}</p>
-                    </div>
+            let actionHTML = '';
+            if (item.versions) {
+                let buttons = item.versions.map(v => `
+                    <a href="${downloads[item.id][v.linkKey]}" target="_blank" class="flex-1 px-3 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold text-center transition-all shadow-md shadow-blue-600/20 flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-download"></i> ${v.ver}
+                    </a>
+                `).join('');
+                actionHTML = `<div class="flex gap-2 pt-2">${buttons}</div>`;
+            } else {
+                let link = downloads[item.downloadKey];
+                actionHTML = `
+                    <a href="${link}" target="_blank" class="w-full px-4 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-semibold text-center transition-all shadow-md shadow-blue-600/20 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-download"></i> ${t.downloadDirect}
+                    </a>
                 `;
-                return;
             }
 
-            container.innerHTML = generateCardsHtml(items, t);
-        }
+            const statusText = t[item.statusKey] || item.statusKey;
+            const descText = t[item.descKey] || item.descKey;
+            const verDisplay = item.latestVersion ? `${t.version} ${item.latestVersion}` : `${t.version} ${item.version}`;
 
-        function renderAllFiles(searchQuery = '') {
-            const container = document.getElementById('allFiles-grid');
-            if (!container) return;
-
-            let allItems = [...siteData.games, ...siteData.apps];
-            const filter = currentFilters.allFiles;
-
-            if (filter !== 'all') {
-                allItems = allItems.filter(item => item.category === filter);
-            }
-
-            if (searchQuery.trim() !== '') {
-                const q = searchQuery.toLowerCase();
-                allItems = allItems.filter(item => item.name.toLowerCase().includes(q));
-            }
-
-            const t = translations[currentLang];
-
-            if (allItems.length === 0) {
-                container.innerHTML = `
-                    <div class="col-span-full py-16 text-center space-y-4 glass-card rounded-3xl border border-blue-900/30">
-                        <div class="text-5xl text-gray-500">📂</div>
-                        <h3 class="text-xl font-bold text-white">${t.notFoundTitle}</h3>
-                        <p class="text-gray-300 text-sm">${t.notFoundDesc}</p>
-                    </div>
-                `;
-                return;
-            }
-
-            container.innerHTML = generateCardsHtml(allItems, t);
-        }
-
-        function generateCardsHtml(items, t) {
-            let html = '';
-            items.forEach(item => {
-                let platformBadge = '';
-                if (item.platform === 'mobile') platformBadge = t.mobile;
-                else if (item.platform === 'pc') platformBadge = t.pc;
-                else platformBadge = t.mobilePc;
-
-                let categoryBadge = item.category === 'games' ? t.gamesTab : t.appsTab;
-                let descText = t[item.descKey] || '';
-                let statusText = t[item.statusKey] || item.statusKey;
-                let verText = item.version || item.latestVersion;
-
-                let imageHtml = '';
-                if (item.image) {
-                    imageHtml = `
-                        <div class="aspect-square w-full overflow-hidden rounded-xl border border-blue-900/40 mb-3 group bg-dark-900 flex items-center justify-center">
-                            <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                        </div>
-                    `;
-                }
-
-                html += `
-                    <div class="glass-card p-6 rounded-2xl border border-blue-900/30 hover:border-blue-700/50 transition-all duration-300 flex flex-col justify-between glow-effect space-y-5">
-                        <div class="space-y-3">
-                            ${imageHtml}
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center gap-2">
-                                    <span class="text-xs px-2.5 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 font-semibold">${categoryBadge}</span>
-                                    <span class="text-xs px-2.5 py-1 rounded-full bg-dark-700 text-gray-300 font-medium">${platformBadge}</span>
-                                </div>
-                                <span class="text-xs px-2.5 py-1 rounded-md bg-dark-700 text-gray-300 font-medium">${t.version} ${verText}</span>
-                            </div>
-                            <h3 class="text-lg font-bold text-white">${item.name}</h3>
-                            <p class="text-gray-300 text-xs leading-relaxed">${descText}</p>
-                        </div>
-
-                        <div class="space-y-4">
-                            <div class="bg-dark-900/80 p-3.5 rounded-xl border border-blue-900/30 space-y-1.5 text-xs">
-                                <div class="flex justify-between text-gray-200">
-                                    <span class="text-gray-300">${t.format}</span>
-                                    <span class="font-bold text-blue-400">${item.format}</span>
-                                </div>
-                                <div class="flex justify-between text-gray-200">
-                                    <span class="text-gray-300">${t.status}</span>
-                                    <span class="font-medium text-blue-400">${statusText}</span>
-                                </div>
-                                <div class="flex justify-between text-gray-200 pt-1 border-t border-blue-900/30">
-                                    <span class="text-gray-300">${t.password}</span>
-                                    <span class="font-mono text-blue-300 font-semibold select-all">🔐 amir1575</span>
-                                </div>
-                            </div>
-
-                            ${item.versions ? renderMultiVersionButtons(item.versions, t) : renderSingleDownloadButton(item.downloadKey, item.format, t)}
-                        </div>
-                    </div>
-                `;
-            });
-            return html;
-        }
-
-        function renderSingleDownloadButton(downloadKey, format, t) {
-            const url = downloads[downloadKey] || '#';
             return `
-                <a href="${url}" target="_blank" class="w-full py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold text-xs transition-all shadow-lg shadow-blue-500/20 flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-download"></i> ${t.downloadDirect} (${format})
-                </a>
+                <div class="glass-card rounded-2xl overflow-hidden glow-effect transition-all flex flex-col justify-between border border-blue-900/30 text-dir-aware">
+                    <div>
+                        <div class="relative aspect-square overflow-hidden bg-dark-900">
+                            <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-500">
+                            <div class="absolute top-3 ${currentLang === 'en' ? 'left-3' : 'right-3'} flex gap-2">
+                                ${platformBadge}
+                            </div>
+                        </div>
+                        <div class="p-5 space-y-3">
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-lg font-bold text-white">${item.name}</h3>
+                                <span class="text-xs font-semibold text-blue-400 bg-blue-950/60 px-2.5 py-1 rounded-lg border border-blue-900/50">${verDisplay}</span>
+                            </div>
+                            <p class="text-gray-300 text-sm leading-relaxed line-clamp-2">${descText}</p>
+                            <div class="pt-2 border-t border-blue-900/20 space-y-1.5 text-xs text-gray-400">
+                                <div class="flex justify-between">
+                                    <span>${t.format}</span>
+                                    <span class="text-gray-200 font-medium">${item.format}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>${t.status}</span>
+                                    <span class="text-emerald-400 font-medium">${statusText}</span>
+                                </div>
+                                <div class="flex justify-between items-center bg-dark-900/60 px-2.5 py-1.5 rounded-lg border border-blue-900/30">
+                                    <span class="text-gray-300">${t.password}</span>
+                                    <span class="text-blue-400 font-mono font-bold select-all">amir1575</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-5 pt-0">
+                        ${actionHTML}
+                    </div>
+                </div>
             `;
         }
 
-        function renderMultiVersionButtons(versions, t) {
-            let btnsHtml = '<div class="space-y-2">';
-            versions.forEach(v => {
-                const url = downloads.superJumper[`v${v.ver.replace('.', '_')}`] || '#';
-                btnsHtml += `
-                    <div class="flex items-center justify-between bg-dark-900/90 px-3.5 py-2.5 rounded-xl border border-blue-900/30">
-                        <span class="text-xs font-bold text-gray-200">${t.version} ${v.ver}</span>
-                        <a href="${url}" target="_blank" class="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold transition-all shadow-md flex items-center gap-1.5">
-                            <span>${t.download}</span>
-                            <i class="fa-solid fa-download text-[10px]"></i>
-                        </a>
+        function renderProjects(type, filter = 'all') {
+            const grid = document.getElementById(`${type}-grid`);
+            let items = siteData[type];
+            if (filter !== 'all') {
+                items = items.filter(i => i.platform === filter || i.platform === 'all');
+            }
+
+            if (items.length === 0) {
+                const t = translations[currentLang];
+                grid.innerHTML = `
+                    <div class="col-span-full text-center py-12 glass-card rounded-2xl text-dir-aware">
+                        <i class="fa-regular fa-folder-open text-4xl text-gray-500 mb-3"></i>
+                        <h4 class="text-lg font-bold text-white">${t.notFoundTitle}</h4>
+                        <p class="text-gray-400 text-sm mt-1">${t.notFoundDesc}</p>
                     </div>
                 `;
-            });
-            btnsHtml += '</div>';
-            return btnsHtml;
+                return;
+            }
+
+            grid.innerHTML = items.map(item => createCardHTML(item)).join('');
+        }
+
+        function renderAllFiles(filter = 'all') {
+            const grid = document.getElementById('allFiles-grid');
+            let allItems = [];
+            if (filter === 'all' || filter === 'games') {
+                allItems = allItems.concat(siteData.games);
+            }
+            if (filter === 'all' || filter === 'apps') {
+                allItems = allItems.concat(siteData.apps);
+            }
+
+            if (allItems.length === 0) {
+                const t = translations[currentLang];
+                grid.innerHTML = `
+                    <div class="col-span-full text-center py-12 glass-card rounded-2xl text-dir-aware">
+                        <i class="fa-regular fa-folder-open text-4xl text-gray-500 mb-3"></i>
+                        <h4 class="text-lg font-bold text-white">${t.notFoundTitle}</h4>
+                        <p class="text-gray-400 text-sm mt-1">${t.notFoundDesc}</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = allItems.map(item => createCardHTML(item)).join('');
         }
 
         function handleSearch() {
-            const query = document.getElementById('global-search').value;
-            const activeTabContent = document.querySelector('.tab-content:not(.hidden)');
-            if (activeTabContent) {
-                if (activeTabContent.id === 'tab-games') {
-                    renderProjects('games', query);
-                } else if (activeTabContent.id === 'tab-apps') {
-                    renderProjects('apps', query);
-                } else if (activeTabContent.id === 'tab-allFiles') {
-                    renderAllFiles(query);
-                }
+            const query = document.getElementById('global-search').value.toLowerCase().trim();
+            if (!query) {
+                renderProjects('games');
+                renderProjects('apps');
+                renderAllFiles();
+                return;
             }
+
+            const allItems = [...siteData.games, ...siteData.apps];
+            const filtered = allItems.filter(item => 
+                item.name.toLowerCase().includes(query) || 
+                item.format.toLowerCase().includes(query)
+            );
+
+            const grid = document.getElementById('allFiles-grid');
+            switchTab('allFiles');
+            
+            if (filtered.length === 0) {
+                const t = translations[currentLang];
+                grid.innerHTML = `
+                    <div class="col-span-full text-center py-12 glass-card rounded-2xl text-dir-aware">
+                        <i class="fa-regular fa-folder-open text-4xl text-gray-500 mb-3"></i>
+                        <h4 class="text-lg font-bold text-white">${t.notFoundTitle}</h4>
+                        <p class="text-gray-400 text-sm mt-1">${t.notFoundDesc}</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(item => createCardHTML(item)).join('');
         }
 
+        // Initial render on load
         window.addEventListener('DOMContentLoaded', () => {
+            updateSearchInputPadding();
+            updateTexts();
             renderProjects('games');
             renderProjects('apps');
+            renderAllFiles();
         });
     </script>
 </body>
