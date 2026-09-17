@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Mohaghegh's Apps - بازی‌ها و برنامه‌ها</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Font Yekan / Vazirmatn -->
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Vazirmatn', 'Yekan', 'sans-serif'],
+                    },
+                    colors: {
+                        dark: {
+                            900: '#0b0f19',
+                            800: '#111827',
+                            700: '#1f2937',
+                            600: '#374151',
+                        },
+                        accent: {
+                            blue: '#3b82f6',
+                            indigo: '#6366f1',
+                            light: '#60a5fa',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0b0f19;
+            color: #f3f4f6;
+            font-family: 'Vazirmatn', 'Yekan', sans-serif;
+            overflow-x: hidden;
+        }
+        .glass-card {
+            background: rgba(17, 24, 39, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(59, 130, 246, 0.15);
+        }
+        .glass-nav {
+            background: rgba(11, 15, 25, 0.9);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(59, 130, 246, 0.15);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 50%, #2563eb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .glow-effect:hover {
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.25);
+            border-color: rgba(59, 130, 246, 0.4);
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b0f19;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1f2937;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #374151;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+
+    <!-- Header & Navigation -->
+    <header class="glass-nav sticky top-0 z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3 space-x-reverse cursor-pointer" onclick="switchTab('home')">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-blue-500 flex items-center justify-center shadow-lg shadow-blue-500/20">
+                        <i class="fa-solid fa-cube text-white text-lg"></i>
+                    </div>
+                    <span class="text-xl font-extrabold tracking-wider gradient-text">Mohaghegh's Apps</span>
+                </div>
+
+                <!-- Desktop Menu -->
+                <nav class="hidden md:flex items-center space-x-1 space-x-reverse">
+                    <button onclick="switchTab('home')" id="nav-home" class="nav-btn px-4 py-2 rounded-lg text-sm font-medium transition-colors text-blue-400 bg-dark-700/60" data-i18n="home">خانه</button>
+                    <button onclick="switchTab('games')" id="nav-games" class="nav-btn px-4 py-2 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:text-white hover:bg-dark-700/30" data-i18n="games">بازی‌ها</button>
+                    <button onclick="switchTab('apps')" id="nav-apps" class="nav-btn px-4 py-2 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:text-white hover:bg-dark-700/30" data-i18n="apps">برنامه‌ها</button>
+                    <button onclick="switchTab('allFiles')" id="nav-allFiles" class="nav-btn px-4 py-2 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:text-white hover:bg-dark-700/30" data-i18n="allFiles">همه فایل‌ها</button>
+                    <button onclick="switchTab('about')" id="nav-about" class="nav-btn px-4 py-2 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:text-white hover:bg-dark-700/30" data-i18n="about">درباره</button>
+                </nav>
+
+                <!-- Language Switcher & Mobile Toggle -->
+                <div class="flex items-center gap-3">
+                    <button onclick="toggleLanguage()" class="px-3 py-1.5 rounded-xl bg-dark-700/80 hover:bg-dark-600 border border-blue-900/50 text-xs font-semibold text-blue-400 flex items-center gap-1.5 transition-all">
+                        <i class="fa-solid fa-globe"></i>
+                        <span id="lang-label">English</span>
+                    </button>
+
+                    <div class="md:hidden flex items-center">
+                        <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white focus:outline-none p-2 rounded-lg bg-dark-700/50">
+                            <i class="fa-solid fa-bars text-xl" id="menu-icon"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobile-menu" class="hidden md:hidden glass-card border-t border-blue-900/30 px-4 pt-2 pb-4 space-y-1 transition-all duration-300">
+            <button onclick="switchTab('home'); toggleMobileMenu();" class="block w-full text-right px-3 py-2 rounded-md text-base font-medium text-blue-400 bg-dark-700/50" data-i18n="home">خانه</button>
+            <button onclick="switchTab('games'); toggleMobileMenu();" class="block w-full text-right px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-dark-700/50" data-i18n="games">بازی‌ها</button>
+            <button onclick="switchTab('apps'); toggleMobileMenu();" class="block w-full text-right px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-dark-700/50" data-i18n="apps">برنامه‌ها</button>
+            <button onclick="switchTab('allFiles'); toggleMobileMenu();" class="block w-full text-right px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-dark-700/50" data-i18n="allFiles">همه فایل‌ها</button>
+            <button onclick="switchTab('about'); toggleMobileMenu();" class="block w-full text-right px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-dark-700/50" data-i18n="about">درباره</button>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- Global Search Bar -->
+        <div id="search-container" class="mb-8 hidden">
+            <div class="relative max-w-xl mx-auto">
+                <span class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none text-blue-500/70">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </span>
+                <input type="text" id="global-search" oninput="handleSearch()" placeholder="🔍 جستجو در بازی‌ها و برنامه‌ها..." class="w-full bg-dark-800/90 text-white placeholder-gray-400 pl-4 pr-11 py-3 rounded-xl border border-blue-900/40 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all shadow-inner">
+            </div>
+        </div>
+
+        <!-- ================= HOME TAB ================= -->
+        <section id="tab-home" class="tab-content space-y-16">
+            <div class="text-center py-16 md:py-24 relative overflow-hidden rounded-3xl glass-card border border-blue-900/30 p-8 sm:p-12 shadow-2xl">
+                <div class="absolute -top-24 -right-24 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -bottom-24 -left-24 w-72 h-72 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="relative z-10 space-y-6 max-w-3xl mx-auto">
+                    <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                        <i class="fa-solid fa-sparkles"></i> <span data-i18n="welcome">خوش آمدید</span>
+                    </span>
+                    <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight">
+                        <span class="gradient-text">Mohaghegh's Apps</span>
+                    </h1>
+                    <p class="text-xl sm:text-2xl font-medium text-gray-200" data-i18n="heroSubtitle">
+                        بازی‌ها و برنامه‌های ساخته‌شده توسط امیر محمد محقق
+                    </p>
+                    <p class="text-gray-300 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto" data-i18n="heroDesc">
+                        مجموعه‌ای از بازی‌ها و برنامه‌های ساخته‌شده برای موبایل و کامپیوتر. با کیفیت بالا و آماده برای دانلود مستقیم.
+                    </p>
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-4">
+                        <button onclick="switchTab('allFiles')" class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 text-sm">
+                            <i class="fa-solid fa-folder-open"></i> <span data-i18n="viewAllFiles">مشاهده همه فایل‌ها</span>
+                        </button>
+                        <button onclick="switchTab('games')" class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-dark-700/80 hover:bg-dark-600 text-white font-semibold border border-blue-900/50 hover:border-blue-600 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 text-sm">
+                            <i class="fa-solid fa-gamepad"></i> <span data-i18n="viewGames">مشاهده بازی‌ها</span>
+                        </button>
+                        <button onclick="switchTab('apps')" class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-dark-700/80 hover:bg-dark-600 text-white font-semibold border border-blue-900/50 hover:border-blue-600 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 text-sm">
+                            <i class="fa-solid fa-mobile-screen"></i> <span data-i18n="viewApps">مشاهده برنامه‌ها</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="glass-card p-6 rounded-2xl glow-effect transition-all">
+                    <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-mobile-screen-button"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2" data-i18n="feat1Title">موبایل (APK / ZIP)</h3>
+                    <p class="text-gray-300 text-sm" data-i18n="feat1Desc">بازی‌ها و برنامه‌های اندرویدی و فشرده با سازگاری کامل.</p>
+                </div>
+                <div class="glass-card p-6 rounded-2xl glow-effect transition-all">
+                    <div class="w-12 h-12 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-desktop"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2" data-i18n="feat2Title">کامپیوتر و وب</h3>
+                    <p class="text-gray-300 text-sm" data-i18n="feat2Desc">بازی‌های دسکتاپ و تحت وب با اجرای سریع و نسخه‌های متنوع.</p>
+                </div>
+                <div class="glass-card p-6 rounded-2xl glow-effect transition-all">
+                    <div class="w-12 h-12 rounded-xl bg-blue-600/10 text-blue-300 flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2" data-i18n="feat3Title">فایل‌های امن</h3>
+                    <p class="text-gray-300 text-sm" data-i18n="feat3Desc">تمامی فایل‌های فشرده دارای رمز ثابت و مشخص جهت استخراج هستند.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= GAMES TAB ================= -->
+        <section id="tab-games" class="tab-content hidden space-y-8">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-blue-900/30 pb-6">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-white flex items-center gap-3">
+                        <i class="fa-solid fa-gamepad text-blue-400"></i> <span data-i18n="gamesTitle">بازی‌ها</span>
+                    </h2>
+                    <p class="text-gray-300 text-sm mt-1" data-i18n="gamesDesc">لیست بازی‌های منتشر شده برای پلتفرم‌های موبایل و کامپیوتر</p>
+                </div>
+                <div class="flex items-center gap-2 bg-dark-800 p-1.5 rounded-xl border border-blue-900/40 self-start md:self-auto">
+                    <button onclick="filterProjects('games', 'all')" id="filter-games-all" class="filter-btn-games px-4 py-2 rounded-lg text-xs font-semibold bg-blue-600 text-white transition-all" data-i18n="all">همه</button>
+                    <button onclick="filterProjects('games', 'mobile')" id="filter-games-mobile" class="filter-btn-games px-4 py-2 rounded-lg text-xs font-semibold text-gray-300 hover:text-white hover:bg-dark-700 transition-all" data-i18n="mobile">📱 موبایل</button>
+                    <button onclick="filterProjects('games', 'pc')" id="filter-games-pc" class="filter-btn-games px-4 py-2 rounded-lg text-xs font-semibold text-gray-300 hover:text-white hover:bg-dark-700 transition-all" data-i18n="pc">💻 کامپیوتر</button>
+                </div>
+            </div>
+
+            <div id="games-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </section>
+
+        <!-- ================= APPS TAB ================= -->
+        <section id="tab-apps" class="tab-content hidden space-y-8">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-blue-900/30 pb-6">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-white flex items-center gap-3">
+                        <i class="fa-solid fa-mobile-screen text-indigo-400"></i> <span data-i18n="appsTitle">برنامه‌ها</span>
+                    </h2>
+                    <p class="text-gray-300 text-sm mt-1" data-i18n="appsDesc">ابزارها و برنامه‌های کاربردی موبایل و کامپیوتر</p>
+                </div>
+                <div class="flex items-center gap-2 bg-dark-800 p-1.5 rounded-xl border border-blue-900/40 self-start md:self-auto">
+                    <button onclick="filterProjects('apps', 'all')" id="filter-apps-all" class="filter-btn-apps px-4 py-2 rounded-lg text-xs font-semibold bg-blue-600 text-white transition-all" data-i18n="all">همه</button>
+                    <button onclick="filterProjects('apps', 'mobile')" id="filter-apps-mobile" class="filter-btn-apps px-4 py-2 rounded-lg text-xs font-semibold text-gray-300 hover:text-white hover:bg-dark-700 transition-all" data-i18n="mobile">📱 موبایل</button>
+                    <button onclick="filterProjects('apps', 'pc')" id="filter-apps-pc" class="filter-btn-apps px-4 py-2 rounded-lg text-xs font-semibold text-gray-300 hover:text-white hover:bg-dark-700 transition-all" data-i18n="pc">💻 کامپیوتر</button>
+                </div>
+            </div>
+
+            <div id="apps-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </section>
+
+        <!-- ================= ALL FILES TAB ================= -->
+        <section id="tab-allFiles" class="tab-content hidden space-y-8">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-blue-900/30 pb-6">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-white flex items-center gap-3">
+                        <i class="fa-solid fa-folder-open text-blue-400"></i> <span data-i18n="allFilesTitle">همه فایل‌ها (آرشیو کامل)</span>
+                    </h2>
+                    <p class="text-gray-300 text-sm mt-1" data-i18n="allFilesDesc">مشاهده یکجا و جامع تمامی بازی‌ها و برنامه‌های منتشر شده</p>
+                </div>
+                <div class="flex items-center gap-2 bg-dark-800 p-1.5 rounded-xl border border-blue-900/40 self-start md:self-auto">
+                    <button onclick="filterAllFiles('all')" id="filter-allFiles-all" class="filter-btn-allFiles px-4 py-2 rounded-lg text-xs font-semibold bg-blue-600 text-white transition-all" data-i18n="all">همه</button>
+                    <button onclick="filterAllFiles('games')" id="filter-allFiles-games" class="filter-btn-allFiles px-4 py-2 rounded-lg text-xs font-semibold text-gray-300 hover:text-white hover:bg-dark-700 transition-all" data-i18n="gamesTab">🎮 بازی‌ها</button>
+                    <button onclick="filterAllFiles('apps')" id="filter-allFiles-apps" class="filter-btn-allFiles px-4 py-2 rounded-lg text-xs font-semibold text-gray-300 hover:text-white hover:bg-dark-700 transition-all" data-i18n="appsTab">📱 برنامه‌ها</button>
+                </div>
+            </div>
+
+            <div id="allFiles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </section>
+
+        <!-- ================= ABOUT TAB ================= -->
+        <section id="tab-about" class="tab-content hidden space-y-8 max-w-3xl mx-auto">
+            <div class="glass-card p-8 sm:p-10 rounded-3xl border border-blue-900/30 space-y-6 shadow-xl">
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-2xl text-white shadow-lg">
+                        <i class="fa-solid fa-info"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-white" data-i18n="aboutTitle">درباره Mohaghegh's Apps</h2>
+                        <p class="text-blue-400 text-sm mt-1" data-i18n="aboutSubtitle">توسعه‌دهنده بازی و اپلیکیشن</p>
+                    </div>
+                </div>
+                <div class="border-t border-blue-900/30 pt-6 space-y-4 text-gray-200 leading-relaxed">
+                    <p class="text-lg" data-i18n="aboutText1">
+                        Mohaghegh's Apps مجموعه‌ای از بازی‌ها و برنامه‌های ساخته‌شده توسط امیر محمد محقق است.
+                    </p>
+                    <p class="text-gray-300 text-sm" data-i18n="aboutText2">
+                        هدف اصلی این پلتفرم اشتراک‌گذاری پروژه‌های شخصی، بازی‌های سرگرم‌کننده و ابزارهای کاربردی برای کاربران موبایل و کامپیوتر است. تمامی برنامه‌ها و بازی‌ها با دقت طراحی و توسعه یافته‌اند تا بهترین تجربه ممکن را ارائه دهند.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="glass-nav mt-16 py-8 text-center text-sm text-gray-300 border-t border-blue-900/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-2">
+            <p class="font-bold text-white tracking-wide">Mohaghegh's Apps</p>
+            <p class="text-xs text-gray-300" data-i18n="heroSubtitle">بازی‌ها و برنامه‌های ساخته‌شده توسط امیر محمد محقق</p>
+            <p class="text-xs text-gray-400 pt-2" data-i18n="copyright">© 2026 Mohaghegh's Apps. تمامی حقوق محفوظ است.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Data and Application Logic -->
+    <script>
+        const translations = {
+            fa: {
+                home: "خانه",
+                games: "بازی‌ها",
+                apps: "برنامه‌ها",
+                allFiles: "همه فایل‌ها",
+                about: "درباره",
+                searchPlaceholder: "🔍 جستجو در بازی‌ها و برنامه‌ها...",
+                welcome: "خوش آمدید",
+                heroSubtitle: "بازی‌ها و برنامه‌های ساخته‌شده توسط امیر محمد محقق",
+                heroDesc: "مجموعه‌ای از بازی‌ها و برنامه‌های ساخته‌شده برای موبایل و کامپیوتر. با کیفیت بالا و آماده برای دانلود مستقیم.",
+                viewAllFiles: "مشاهده همه فایل‌ها",
+                viewGames: "مشاهده بازی‌ها",
+                viewApps: "مشاهده برنامه‌ها",
+                feat1Title: "موبایل (APK / ZIP)",
+                feat1Desc: "بازی‌ها و برنامه‌های اندرویدی و فشرده با سازگاری کامل.",
+                feat2Title: "کامپیوتر و وب",
+                feat2Desc: "بازی‌های دسکتاپ و تحت وب با اجرای سریع و نسخه‌های متنوع.",
+                feat3Title: "فایل‌های امن",
+                feat3Desc: "تمامی فایل‌های فشرده دارای رمز ثابت و مشخص جهت استخراج هستند.",
+                gamesTitle: "بازی‌ها",
+                gamesDesc: "لیست بازی‌های منتشر شده برای پلتفرم‌های موبایل و کامپیوتر",
+                appsTitle: "برنامه‌ها",
+                appsDesc: "ابزارها و برنامه‌های کاربردی موبایل و کامپیوتر",
+                allFilesTitle: "همه فایل‌ها (آرشیو کامل)",
+                allFilesDesc: "مشاهده یکجا و جامع تمامی بازی‌ها و برنامه‌های منتشر شده",
+                aboutTitle: "درباره Mohaghegh's Apps",
+                aboutSubtitle: "توسعه‌دهنده بازی و اپلیکیشن",
+                aboutText1: "Mohaghegh's Apps مجموعه‌ای از بازی‌ها و برنامه‌های ساخته‌شده توسط امیر محمد محقق است.",
+                aboutText2: "هدف اصلی این پلتفرم اشتراک‌گذاری پروژه‌های شخصی، بازی‌های سرگرم‌کننده و ابزارهای کاربردی برای کاربران موبایل و کامپیوتر است. تمامی برنامه‌ها و بازی‌ها با دقت طراحی و توسعه یافته‌اند تا بهترین تجربه ممکن را ارائه دهند.",
+                all: "همه",
+                mobile: "📱 موبایل",
+                pc: "💻 کامپیوتر",
+                gamesTab: "🎮 بازی‌ها",
+                appsTab: "📱 برنامه‌ها",
+                version: "نسخه",
+                format: "فرمت فایل:",
+                status: "وضعیت:",
+                password: "رمز فایل فشرده:",
+                downloadDirect: "دانلود مستقیم",
+                download: "دانلود",
+                published: "منتشر شده",
+                finalVersion: "نسخه نهایی",
+                notDeclared: "اعلام نشده",
+                copyright: "© 2026 Mohaghegh's Apps. تمامی حقوق محفوظ است.",
+                gameBoxDesc: "مجموعه‌ای جذاب و سرگرم‌کننده از بازی‌های موبایلی.",
+                superJumperDesc: "بازی پرشی هیجان‌انگیز کامپیوتری. نسخه 1.2 نسخه نهایی است و دیگر نسخه جدیدی منتشر نخواهد شد.",
+                defense30Desc: "یک بازی استراتژیک سریع و مهیج برای دفاع از پایگاه در کامپیوتر.",
+                streetWarriorsDesc: "بازی اکشن و جذاب Street Warriors که هم روی کامپیوتر و هم روی اندروید قابل اجراست.",
+                quickToolsDesc: "جعبه‌ابزار سریع و کاربردی موبایل برای انجام کارهای روزمره.",
+                mobilePc: "📱💻 موبایل و کامپیوتر",
+                notFoundTitle: "موردی یافت نشد.",
+                notFoundDesc: "پروژه‌ای با این مشخصات وجود ندارد."
+            },
+            en: {
+                home: "Home",
+                games: "Games",
+                apps: "Apps",
+                allFiles: "All Files",
+                about: "About",
+                searchPlaceholder: "🔍 Search games and apps...",
+                welcome: "Welcome",
+                heroSubtitle: "Games and applications built by Amir Mohammad Mohaghegh",
+                heroDesc: "A collection of games and apps built for mobile and PC, with high quality and ready for direct download.",
+                viewAllFiles: "View All Files",
+                viewGames: "View Games",
+                viewApps: "View Apps",
+                feat1Title: "Mobile (APK / ZIP)",
+                feat1Desc: "Android and compressed games and apps with full compatibility.",
+                feat2Title: "PC & Web",
+                feat2Desc: "Desktop and web games with fast execution and various versions.",
+                feat3Title: "Secure Files",
+                feat3Desc: "All compressed files have a fixed, specified password for extraction.",
+                gamesTitle: "Games",
+                gamesDesc: "List of published games for mobile and PC platforms",
+                appsTitle: "Applications",
+                appsDesc: "Mobile and PC utility tools and apps",
+                allFilesTitle: "All Files (Complete Archive)",
+                allFilesDesc: "Comprehensive view of all published games and applications",
+                aboutTitle: "About Mohaghegh's Apps",
+                aboutSubtitle: "Game & App Developer",
+                aboutText1: "Mohaghegh's Apps is a collection of games and applications created by Amir Mohammad Mohaghegh.",
+                aboutText2: "The main goal of this platform is to share personal projects, entertaining games, and useful tools for mobile and PC users. All apps and games are carefully designed and developed to provide the best possible experience.",
+                all: "All",
+                mobile: "📱 Mobile",
+                pc: "💻 PC",
+                gamesTab: "🎮 Games",
+                appsTab: "📱 Apps",
+                version: "Version",
+                format: "File Format:",
+                status: "Status:",
+                password: "Archive Password:",
+                downloadDirect: "Direct Download",
+                download: "Download",
+                published: "Published",
+                finalVersion: "Final Version",
+                notDeclared: "N/A",
+                copyright: "© 2026 Mohaghegh's Apps. All rights reserved.",
+                gameBoxDesc: "An engaging and entertaining collection of mobile games.",
+                superJumperDesc: "An exciting PC jumper game. Version 1.2 is the final version and no new versions will be released.",
+                defense30Desc: "A fast and thrilling strategic base defense game for PC.",
+                streetWarriorsDesc: "An action-packed Street Warriors game playable on both PC and Android.",
+                quickToolsDesc: "Fast and useful mobile toolbox for everyday tasks.",
+                mobilePc: "📱💻 Mobile & PC",
+                notFoundTitle: "No results found.",
+                notFoundDesc: "No project matches your search criteria."
+            }
+        };
+
+        let currentLang = 'fa';
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'fa' ? 'en' : 'fa';
+            const htmlRoot = document.getElementById('html-root');
+            const langLabel = document.getElementById('lang-label');
+
+            if (currentLang === 'en') {
+                htmlRoot.setAttribute('lang', 'en');
+                htmlRoot.setAttribute('dir', 'ltr');
+                langLabel.innerText = 'فارسی';
+            } else {
+                htmlRoot.setAttribute('lang', 'fa');
+                htmlRoot.setAttribute('dir', 'rtl');
+                langLabel.innerText = 'English';
+            }
+
+            updateTexts();
+            const activeTab = document.querySelector('.tab-content:not(.hidden)');
+            if (activeTab) {
+                const tabId = activeTab.id.replace('tab-', '');
+                if (tabId === 'games') renderProjects('games');
+                else if (tabId === 'apps') renderProjects('apps');
+                else if (tabId === 'allFiles') renderAllFiles();
+            }
+        }
+
+        function updateTexts() {
+            const t = translations[currentLang];
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (t[key]) {
+                    el.innerText = t[key];
+                }
+            });
+
+            const searchInput = document.getElementById('global-search');
+            if (searchInput) {
+                searchInput.placeholder = t.searchPlaceholder;
+            }
+        }
+
+        const downloads = {
+            gameBox: "https://uploadkon.ir/uploads/afb917_26Game-Box.zip",
+            superJumper: {
+                v1_0: "https://uploadkon.ir/uploads/0ed816_26Super-Jumper-v1-0.zip",
+                v1_1: "https://uploadkon.ir/uploads/17fd16_26Super-Jumper-v1-1.zip",
+                v1_2: "https://uploadkon.ir/uploads/934716_26Super-Jumper-v1-2.rar"
+            },
+            defense30: "https://uploadkon.ir/uploads/e6ed16_26بازی-دفاعی-30-ثانیه.rar",
+            streetWarriors: "https://uploadkon.ir/uploads/7c1616_26Street-Warriors-Ultimate-Edition.zip",
+            quickTools: "https://uploadkon.ir/uploads/7f6617_26QuickTools.zip"
+        };
+
+        let siteData = {
+            games: [
+                {
+                    id: 'gameBox',
+                    name: 'Game Box',
+                    platform: 'mobile',
+                    category: 'games',
+                    version: '1.0',
+                    statusKey: 'published',
+                    format: 'ZIP',
+                    descKey: 'gameBoxDesc',
+                    image: 'https://uploadkon.ir/uploads/1dbd17_261789626891942.png',
+                    downloadKey: 'gameBox'
+                },
+                {
+                    id: 'superJumper',
+                    name: 'Super Jumper',
+                    platform: 'pc',
+                    category: 'games',
+                    latestVersion: '1.2',
+                    statusKey: 'finalVersion',
+                    format: 'ZIP / RAR',
+                    descKey: 'superJumperDesc',
+                    image: 'https://uploadkon.ir/uploads/3d7417_26Super-Jumper.png',
+                    versions: [
+                        { ver: '1.2', linkKey: 'v1_2' },
+                        { ver: '1.1', linkKey: 'v1_1' },
+                        { ver: '1.0', linkKey: 'v1_0' }
+                    ]
+                },
+                {
+                    id: 'defense30',
+                    name: 'بازی دفاعی ۳۰ ثانیه / 30s Defense',
+                    platform: 'pc',
+                    category: 'games',
+                    version: '1.0',
+                    statusKey: 'published',
+                    format: 'RAR',
+                    descKey: 'defense30Desc',
+                    image: 'https://uploadkon.ir/uploads/e2f817_26Screenshot-2026-09-17-100542.png',
+                    downloadKey: 'defense30'
+                },
+                {
+                    id: 'streetWarriors',
+                    name: 'Street Warriors Ultimate Edition',
+                    platform: 'all',
+                    category: 'games',
+                    version: '1.0',
+                    statusKey: 'published',
+                    format: 'ZIP',
+                    descKey: 'streetWarriorsDesc',
+                    image: 'https://uploadkon.ir/uploads/e9d517_26Street-Warriors-Ultimate-Edition.png',
+                    downloadKey: 'streetWarriors'
+                }
+            ],
+            apps: [
+                {
+                    id: 'quickTools',
+                    name: 'Quick Tools',
+                    platform: 'mobile',
+                    category: 'apps',
+                    version: '1.0',
+                    statusKey: 'published',
+                    format: 'ZIP',
+                    descKey: 'quickToolsDesc',
+                    image: 'https://uploadkon.ir/uploads/b0c617_261789626881151.png',
+                    downloadKey: 'quickTools'
+                }
+            ]
+        };
+
+        let currentFilters = {
+            games: 'all',
+            apps: 'all',
+            allFiles: 'all'
+        };
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('text-blue-400', 'bg-dark-700/60');
+                btn.classList.add('text-gray-300');
+            });
+
+            const targetTab = document.getElementById(`tab-${tabId}`);
+            if (targetTab) {
+                targetTab.classList.remove('hidden');
+            }
+
+            const activeBtn = document.getElementById(`nav-${tabId}`);
+            if (activeBtn) {
+                activeBtn.classList.add('text-blue-400', 'bg-dark-700/60');
+                activeBtn.classList.remove('text-gray-300');
+            }
+
+            const searchContainer = document.getElementById('search-container');
+            if (tabId === 'games' || tabId === 'apps' || tabId === 'allFiles') {
+                searchContainer.classList.remove('hidden');
+                if (tabId === 'allFiles') {
+                    renderAllFiles();
+                } else {
+                    renderProjects(tabId);
+                }
+            } else {
+                searchContainer.classList.add('hidden');
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            menu.classList.toggle('hidden');
+            if (menu.classList.contains('hidden')) {
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            } else {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark');
+            }
+        }
+
+        function filterProjects(category, filterType) {
+            currentFilters[category] = filterType;
+            
+            const buttons = document.querySelectorAll(`.filter-btn-${category}`);
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-blue-600', 'text-white');
+                btn.classList.add('text-gray-300');
+            });
+            
+            const activeBtn = document.getElementById(`filter-${category}-${filterType}`);
+            if (activeBtn) {
+                activeBtn.classList.add('bg-blue-600', 'text-white');
+                activeBtn.classList.remove('text-gray-300');
+            }
+
+            renderProjects(category);
+        }
+
+        function filterAllFiles(filterType) {
+            currentFilters.allFiles = filterType;
+
+            const buttons = document.querySelectorAll('.filter-btn-allFiles');
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-blue-600', 'text-white');
+                btn.classList.add('text-gray-300');
+            });
+
+            const activeBtn = document.getElementById(`filter-allFiles-${filterType}`);
+            if (activeBtn) {
+                activeBtn.classList.add('bg-blue-600', 'text-white');
+                activeBtn.classList.remove('text-gray-300');
+            }
+
+            renderAllFiles();
+        }
+
+        function renderProjects(category, searchQuery = '') {
+            const container = document.getElementById(`${category}-grid`);
+            if (!container) return;
+
+            let items = siteData[category];
+            const filter = currentFilters[category];
+
+            if (filter !== 'all') {
+                items = items.filter(item => item.platform === filter || item.platform === 'all');
+            }
+
+            if (searchQuery.trim() !== '') {
+                const q = searchQuery.toLowerCase();
+                items = items.filter(item => item.name.toLowerCase().includes(q));
+            }
+
+            const t = translations[currentLang];
+
+            if (items.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full py-16 text-center space-y-4 glass-card rounded-3xl border border-blue-900/30">
+                        <div class="text-5xl text-gray-500">📂</div>
+                        <h3 class="text-xl font-bold text-white">${t.notFoundTitle}</h3>
+                        <p class="text-gray-300 text-sm">${t.notFoundDesc}</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = generateCardsHtml(items, t);
+        }
+
+        function renderAllFiles(searchQuery = '') {
+            const container = document.getElementById('allFiles-grid');
+            if (!container) return;
+
+            let allItems = [...siteData.games, ...siteData.apps];
+            const filter = currentFilters.allFiles;
+
+            if (filter !== 'all') {
+                allItems = allItems.filter(item => item.category === filter);
+            }
+
+            if (searchQuery.trim() !== '') {
+                const q = searchQuery.toLowerCase();
+                allItems = allItems.filter(item => item.name.toLowerCase().includes(q));
+            }
+
+            const t = translations[currentLang];
+
+            if (allItems.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full py-16 text-center space-y-4 glass-card rounded-3xl border border-blue-900/30">
+                        <div class="text-5xl text-gray-500">📂</div>
+                        <h3 class="text-xl font-bold text-white">${t.notFoundTitle}</h3>
+                        <p class="text-gray-300 text-sm">${t.notFoundDesc}</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = generateCardsHtml(allItems, t);
+        }
+
+        function generateCardsHtml(items, t) {
+            let html = '';
+            items.forEach(item => {
+                let platformBadge = '';
+                if (item.platform === 'mobile') platformBadge = t.mobile;
+                else if (item.platform === 'pc') platformBadge = t.pc;
+                else platformBadge = t.mobilePc;
+
+                let categoryBadge = item.category === 'games' ? t.gamesTab : t.appsTab;
+                let descText = t[item.descKey] || '';
+                let statusText = t[item.statusKey] || item.statusKey;
+                let verText = item.version || item.latestVersion;
+
+                let imageHtml = '';
+                if (item.image) {
+                    imageHtml = `
+                        <div class="aspect-square w-full overflow-hidden rounded-xl border border-blue-900/40 mb-3 group bg-dark-900 flex items-center justify-center">
+                            <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        </div>
+                    `;
+                }
+
+                html += `
+                    <div class="glass-card p-6 rounded-2xl border border-blue-900/30 hover:border-blue-700/50 transition-all duration-300 flex flex-col justify-between glow-effect space-y-5">
+                        <div class="space-y-3">
+                            ${imageHtml}
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-xs px-2.5 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 font-semibold">${categoryBadge}</span>
+                                    <span class="text-xs px-2.5 py-1 rounded-full bg-dark-700 text-gray-300 font-medium">${platformBadge}</span>
+                                </div>
+                                <span class="text-xs px-2.5 py-1 rounded-md bg-dark-700 text-gray-300 font-medium">${t.version} ${verText}</span>
+                            </div>
+                            <h3 class="text-lg font-bold text-white">${item.name}</h3>
+                            <p class="text-gray-300 text-xs leading-relaxed">${descText}</p>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div class="bg-dark-900/80 p-3.5 rounded-xl border border-blue-900/30 space-y-1.5 text-xs">
+                                <div class="flex justify-between text-gray-200">
+                                    <span class="text-gray-300">${t.format}</span>
+                                    <span class="font-bold text-blue-400">${item.format}</span>
+                                </div>
+                                <div class="flex justify-between text-gray-200">
+                                    <span class="text-gray-300">${t.status}</span>
+                                    <span class="font-medium text-blue-400">${statusText}</span>
+                                </div>
+                                <div class="flex justify-between text-gray-200 pt-1 border-t border-blue-900/30">
+                                    <span class="text-gray-300">${t.password}</span>
+                                    <span class="font-mono text-blue-300 font-semibold select-all">🔐 amir1575</span>
+                                </div>
+                            </div>
+
+                            ${item.versions ? renderMultiVersionButtons(item.versions, t) : renderSingleDownloadButton(item.downloadKey, item.format, t)}
+                        </div>
+                    </div>
+                `;
+            });
+            return html;
+        }
+
+        function renderSingleDownloadButton(downloadKey, format, t) {
+            const url = downloads[downloadKey] || '#';
+            return `
+                <a href="${url}" target="_blank" class="w-full py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold text-xs transition-all shadow-lg shadow-blue-500/20 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-download"></i> ${t.downloadDirect} (${format})
+                </a>
+            `;
+        }
+
+        function renderMultiVersionButtons(versions, t) {
+            let btnsHtml = '<div class="space-y-2">';
+            versions.forEach(v => {
+                const url = downloads.superJumper[`v${v.ver.replace('.', '_')}`] || '#';
+                btnsHtml += `
+                    <div class="flex items-center justify-between bg-dark-900/90 px-3.5 py-2.5 rounded-xl border border-blue-900/30">
+                        <span class="text-xs font-bold text-gray-200">${t.version} ${v.ver}</span>
+                        <a href="${url}" target="_blank" class="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold transition-all shadow-md flex items-center gap-1.5">
+                            <span>${t.download}</span>
+                            <i class="fa-solid fa-download text-[10px]"></i>
+                        </a>
+                    </div>
+                `;
+            });
+            btnsHtml += '</div>';
+            return btnsHtml;
+        }
+
+        function handleSearch() {
+            const query = document.getElementById('global-search').value;
+            const activeTabContent = document.querySelector('.tab-content:not(.hidden)');
+            if (activeTabContent) {
+                if (activeTabContent.id === 'tab-games') {
+                    renderProjects('games', query);
+                } else if (activeTabContent.id === 'tab-apps') {
+                    renderProjects('apps', query);
+                } else if (activeTabContent.id === 'tab-allFiles') {
+                    renderAllFiles(query);
+                }
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderProjects('games');
+            renderProjects('apps');
+        });
+    </script>
+</body>
+</html>
